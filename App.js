@@ -10,18 +10,38 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  Pressable
+  Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 import { VERTICAL } from 'react-native/Libraries/Components/ScrollView/ScrollViewContext';
 
 const App /*: () => Node */ = () => {
 
-  const [login, setLogin] = useState(null)
-  const [password, setPassword] = useState(null)
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
   const [isLoggedIn, setLoggedIn] = useState(false)
 
   const onLogin = () => {
-    setLoggedIn(true)
+    if (login.length > 0) {
+      if (password.length > 0) {
+        setLoggedIn(true)
+      } else {
+        Alert.alert("Uwaga", "Pole login nie może być puste",
+          [
+            { text: "OK", onPress: () => console.log("Naciśnięto OK") },
+            { text: "Rozumiem" },
+            { text: "Spadaj" }
+          ])
+      }
+
+    } else {
+     
+      ToastAndroid.showWithGravity("Pole login nie może być puste", 
+      ToastAndroid.LONG, 
+      ToastAndroid.TOP)
+    }
+
   }
 
   const onLogout = () => {
@@ -50,7 +70,7 @@ const App /*: () => Node */ = () => {
           <Pressable
             onPress={onLogout}
             onLongPress={onLongPress}
-            style={(pressed) => [{backgroundColor: pressed ? '#000' : "eee"}, styles.button]}
+            style={({ pressed }) => [styles.button, { backgroundColor: pressed ? '#fff' : '#eee' }]}
             hitSlop={10}
           >
             <Text style={styles.buttonText}>Wyloguj</Text>
