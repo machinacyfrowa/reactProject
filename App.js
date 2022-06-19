@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   RefreshControl,
   FlatList,
+  SectionList,
 } from 'react-native';
 
 const App /*: () => Node */ = () => {
@@ -27,6 +28,21 @@ const App /*: () => Node */ = () => {
     { key: 13450, row: "Wiersz 10" },
   ])
 
+  const bigData = [
+    {
+      title: "Nazwa 1",
+      data: ['Element 1-1', 'Element 1-2', 'Element 1-3'],
+    },
+    {
+      title: "Nazwa 2",
+      data: ['Element 2-1', 'Element 2-2', 'Element 2-3'],
+    },
+    {
+      title: "Nazwa 3",
+      data: ['Element 3-1', 'Element 3-2', 'Element 3-3'],
+    },
+  ]
+
   const [listRefreshing, setListRefreshing] = useState(false)
 
   const onListRefresh = () => {
@@ -37,7 +53,23 @@ const App /*: () => Node */ = () => {
 
   return (
     <SafeAreaView style={styles.appMain}>
-      <FlatList
+      <SectionList
+        sections={bigData}
+        keyExtractor={(item, index) => index}
+        renderSectionHeader={({section}) => (
+          <View style={styles.sectionHeader} >
+            <Text style={styles.sectionText}>{section.title}</Text>
+          </View>
+        )}
+        renderItem={({ item }) => (
+          <View style={styles.row} >
+            <Text style={styles.text}>{item}</Text>
+          </View>
+        )
+
+        }
+      />
+      {/* <FlatList
         // horizontal
         refreshControl=
         {<RefreshControl
@@ -51,7 +83,7 @@ const App /*: () => Node */ = () => {
                 <Text style={styles.text}>(Index:{index}){'\n'}{item.row}{'\n'}(Klucz:{item.key})</Text>
           </View>
         )}
-      />
+      /> */}
       {/* <ScrollView
         horizontal={false}
         refreshControl=
@@ -88,13 +120,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#387094',
   },
+  sectionHeader: {
+    backgroundColor: '#60a4d1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    padding: 40,
+  },
+  sectionText: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: '#ffffff',
+  },  
   row: {
     backgroundColor: '#60a4d1',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
     padding: 20,
-    
+
   },
   text: {
     color: '#ffffff',
