@@ -14,6 +14,12 @@ import {
 const App /*: () => Node */ = () => {
 
   const [name, setName] = useState('')
+  const [age, setAge] = useState(null)
+  const [bio, setBio] = useState(null)
+
+  const saveInfo = () => {
+    //TODO: sprawdzić jak zaczytać dane z textinput bez stanu
+  }
 
   return (
     <SafeAreaView style={styles.appMain}>
@@ -25,10 +31,36 @@ const App /*: () => Node */ = () => {
         placeholder='np. Paweł'
         placeholderTextColor={'#eee'}
         onChangeText={(value => setName(value))}
+        // maxLength={16}
+        // secureTextEntry={true}
       />
       <Text style={styles.label}>
         Twoje imię to: {name}
       </Text>
+      <Text style={styles.label}>
+        Ile masz lat:
+      </Text>
+      <TextInput
+        style={styles.input}
+        placeholder='np. 18'
+        placeholderTextColor={'#eee'}
+        keyboardType='number-pad'
+        onChangeText={(value) => setAge(value)}
+      />
+      <Text style={styles.label}>
+        Napisz coś o sobie:
+      </Text>
+      <TextInput
+        style={styles.input}
+        placeholder='np. Czym się zajmujesz'
+        placeholderTextColor={'#eee'}
+        multiline
+        onChangeText={(value) => setBio(value)}
+      />
+      <Button
+        title="Zapisz"
+        onPress={saveInfo}
+      ></Button>
     </SafeAreaView>
   )
 }
