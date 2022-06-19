@@ -9,58 +9,80 @@ import {
   ScrollView,
   SafeAreaView,
   TextInput,
+  TouchableOpacity,
+  Pressable
 } from 'react-native';
+import { VERTICAL } from 'react-native/Libraries/Components/ScrollView/ScrollViewContext';
 
 const App /*: () => Node */ = () => {
 
-  const [name, setName] = useState('')
-  const [age, setAge] = useState(null)
-  const [bio, setBio] = useState(null)
+  const [login, setLogin] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [isLoggedIn, setLoggedIn] = useState(false)
 
-  const saveInfo = () => {
-    //TODO: sprawdzić jak zaczytać dane z textinput bez stanu
+  const onLogin = () => {
+    setLoggedIn(true)
+  }
+
+  const onLogout = () => {
+    setLoggedIn(false)
+  }
+
+  const onLongPress = () => {
+    console.log("Długie naciśnięcie guzika")
   }
 
   return (
     <SafeAreaView style={styles.appMain}>
-      <Text style={styles.label}>
-        Podaj swoje imię:
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder='np. Paweł'
-        placeholderTextColor={'#eee'}
-        onChangeText={(value => setName(value))}
-        // maxLength={16}
-        // secureTextEntry={true}
-      />
-      <Text style={styles.label}>
-        Twoje imię to: {name}
-      </Text>
-      <Text style={styles.label}>
-        Ile masz lat:
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder='np. 18'
-        placeholderTextColor={'#eee'}
-        keyboardType='number-pad'
-        onChangeText={(value) => setAge(value)}
-      />
-      <Text style={styles.label}>
-        Napisz coś o sobie:
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder='np. Czym się zajmujesz'
-        placeholderTextColor={'#eee'}
-        multiline
-        onChangeText={(value) => setBio(value)}
-      />
-      <Button
-        title="Zapisz"
-        onPress={saveInfo}
-      ></Button>
+      {isLoggedIn ?
+        // jestesmy zalogowani
+        // <Button
+        //   title='Wyloguj'
+        //   onPress={onLogout}
+        // />
+        <View>
+          <Text style={styles.label}>
+            Jesteś zalogowany
+          </Text>
+          {/* <TouchableOpacity style={styles.button}
+            onPress={onLogout}
+          > */}
+          <Pressable
+            onPress={onLogout}
+            onLongPress={onLongPress}
+            style={(pressed) => [{backgroundColor: pressed ? '#000' : "eee"}, styles.button]}
+            hitSlop={10}
+          >
+            <Text style={styles.buttonText}>Wyloguj</Text>
+          </Pressable>
+
+          {/* </TouchableOpacity> */}
+        </View>
+        :
+        //nie jesteśmy zalogowani
+        <View>
+          <Text style={styles.label}>Login:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setLogin(value)}
+          />
+          <Text style={styles.label}>Hasło:</Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry
+            onChangeText={(value) => setPassword(value)}
+          />
+          {/* <Button
+            title='Zaloguj'
+            onPress={onLogin}
+          /> */}
+          <TouchableOpacity style={styles.button}
+            onPress={onLogin}
+          >
+            <Text style={styles.buttonText}>Zaloguj</Text>
+          </TouchableOpacity>
+        </View>
+      }
     </SafeAreaView>
   )
 }
@@ -84,7 +106,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: '#eee',
-    
+
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#eee",
+    padding: 10,
+    margin: 20,
+    borderRadius: 5,
+
+  },
+  buttonText: {
+    fontSize: 16,
   },
 });
 
