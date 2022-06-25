@@ -13,8 +13,13 @@ import {
   Pressable,
   Alert,
   ToastAndroid,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import { VERTICAL } from 'react-native/Libraries/Components/ScrollView/ScrollViewContext';
+import Header from './HeaderLogo';
+import MyButton from './MyButton';
+
 
 const App /*: () => Node */ = () => {
 
@@ -36,10 +41,10 @@ const App /*: () => Node */ = () => {
       }
 
     } else {
-     
-      ToastAndroid.showWithGravity("Pole login nie może być puste", 
-      ToastAndroid.LONG, 
-      ToastAndroid.TOP)
+
+      ToastAndroid.showWithGravity("Pole login nie może być puste",
+        ToastAndroid.LONG,
+        ToastAndroid.TOP)
     }
 
   }
@@ -61,26 +66,40 @@ const App /*: () => Node */ = () => {
         //   onPress={onLogout}
         // />
         <View>
+          <Header />
           <Text style={styles.label}>
             Jesteś zalogowany
           </Text>
-          {/* <TouchableOpacity style={styles.button}
-            onPress={onLogout}
-          > */}
-          <Pressable
+
+          {/* <Pressable
             onPress={onLogout}
             onLongPress={onLongPress}
             style={({ pressed }) => [styles.button, { backgroundColor: pressed ? '#fff' : '#eee' }]}
             hitSlop={10}
           >
             <Text style={styles.buttonText}>Wyloguj</Text>
-          </Pressable>
+          </Pressable> */}
+          <MyButton
+            color={'#f00'}
+            onPressFunction={onLogout}
+            buttonText={"Wyloguj"}
+          />
 
-          {/* </TouchableOpacity> */}
         </View>
         :
         //nie jesteśmy zalogowani
-        <View>
+
+        <ImageBackground
+          style={styles.loginForm}
+          resizeMode='cover'
+          source={{ uri: 'https://png.pngtree.com/thumb_back/fw800/background/20190223/ourmid/pngtree-smart-tech-blue-phone-background-backgroundmobile-phonenew-erauniverseintelligentstereoscopicilluminatetechnologydynamicgridbackgroundadvertising-image_72371.jpg' }}
+        >
+          {/* <Image
+            style={styles.image}
+            source={require('./assets/teb-logo.png')}
+          /> */}
+          <Header />
+
           <Text style={styles.label}>Login:</Text>
           <TextInput
             style={styles.input}
@@ -96,12 +115,25 @@ const App /*: () => Node */ = () => {
             title='Zaloguj'
             onPress={onLogin}
           /> */}
-          <TouchableOpacity style={styles.button}
+          {/* <TouchableOpacity style={styles.button}
             onPress={onLogin}
           >
             <Text style={styles.buttonText}>Zaloguj</Text>
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity> */}
+          <MyButton
+            color={'#0f0'}
+            onPressFunction={onLogin}
+            buttonText={"Zaloguj"}
+          />
+          <Image
+            style={styles.networkImage}
+            source={{ uri: 'https://opengameart.org/sites/default/files/DarkHouseTiles_Example_0.png' }}
+            resizeMode='contain'
+          />
+
+        </ImageBackground>
+
+
       }
     </SafeAreaView>
   )
@@ -112,8 +144,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#71A8CD',
     flex: 1,
   },
+  loginForm: {
+    flex: 1,
+    alignItems: 'center',
+  },
   label: {
     textAlign: 'center',
+
     margin: 20,
     color: '#eee',
     fontSize: 20,
@@ -126,7 +163,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: '#eee',
-
+    width: '80%',
   },
   button: {
     alignItems: "center",
@@ -134,11 +171,19 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     borderRadius: 5,
-
+    width: '80%',
   },
   buttonText: {
     fontSize: 16,
   },
+  image: {
+    margin: 10,
+
+  },
+  networkImage: {
+    width: '80%',
+    height: 200
+  }
 });
 
 export default App;
