@@ -10,7 +10,7 @@ import MyButton from "./MyButton";
 const HomeScreen = ({navigation}) => {
 
     const changeScreen = () => {
-        navigation.navigate("Main")
+        navigation.navigate("MainScreen")
         // navigation.replace("Main")
     }
 

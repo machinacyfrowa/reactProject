@@ -7,21 +7,61 @@ import {
 
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab = createMaterialTopTabNavigator();
 
 import HomeScreen from './HomeScreen';
 import MainScreen from './MainScreen';
 
-const Stack = createNativeStackNavigator();
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+
+// const Tab = createBottomTabNavigator();
+
 
 const App /*: () => Node */ = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{header: () => null}}/>
-        <Stack.Screen name="Main" component={MainScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, size, color}) => {
+            let iconName;
+            if(route.name == "HomeScreen") {
+              iconName = "brain"
+              size = focused ? 25 : 20
+              color = focused ? '#000' : '#777'
+            } else  if(route.name == "MainScreen"){
+              iconName = "biohazard"
+              size = focused ? 25 : 20
+              color = focused ? '#000' : '#777'
+            }
+            return (
+              <FontAwesome5
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            )
+          },
+          tabBarShowLabel : false,
+          tabBarActiveBackgroundColor: "#fff",
+          tabBarInactiveBackgroundColor: '#ccc',
+        })}
+        
+      >
+        <Tab.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+        />
+        <Tab.Screen
+          name='MainScreen'
+          component={MainScreen}
+          // options={ {tabBarBadge: 3}}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
