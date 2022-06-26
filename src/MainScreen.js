@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Text,
-    StyleSheet,
     View,
-    Pressable,
 } from 'react-native'
 import MyButton from "./MyButton";
 
-const MainScreen = ({navigation}) => {
+import Style from "./Style";
+
+const MainScreen = ({navigation, route}) => {
+
+    useEffect(
+        () => {
+            console.log(route)
+        }
+    )
+    const firstName = route.params ? route.params.firstName : ""
 
     const goBack = () => {
         navigation.goBack()
@@ -15,8 +22,9 @@ const MainScreen = ({navigation}) => {
     }
 
     return (
-        <View style={styles.view}>
-            <Text style={styles.text}>Ekran główny aplikacji!</Text>
+        <View style={Style.view}>
+            <Text style={Style.text}>Ekran główny aplikacji!</Text>
+            <Text style={Style.textSmall}>Witaj {firstName}</Text>
             <MyButton
                 onPressFunction={goBack}
                 buttonText={"Wróć"}
@@ -33,15 +41,4 @@ const MainScreen = ({navigation}) => {
     )
 }
 
-const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    text: {
-        textAlign: "center",
-        fontSize: 32,
-    },
-})
 export default MainScreen
