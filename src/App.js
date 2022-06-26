@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+
+
 const Tab = createMaterialTopTabNavigator();
 
 import HomeScreen from './HomeScreen';
@@ -19,6 +21,7 @@ import MainScreen from './MainScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 // const Tab = createBottomTabNavigator();
+
 
 
 const App /*: () => Node */ = () => {
